@@ -14,17 +14,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.greeter = exports.TSButton = void 0;
-var models_1 = require("./models");
 __exportStar(require("./models"), exports);
-var user = new models_1.Student("Sami", "M.", "Jeanny");
-function TSButton() {
-    var name = "Jeanny Sami Updated tf";
-    document.getElementById("ts-example").innerHTML = greeter(user);
-}
-exports.TSButton = TSButton;
-function greeter(person) {
-    return "Hello, " + person.fullName;
-}
-exports.greeter = greeter;
+__exportStar(require("./feature"), exports);
 //# sourceMappingURL=app.js.map

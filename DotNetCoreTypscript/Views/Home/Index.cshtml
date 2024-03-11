@@ -8,7 +8,15 @@
 </div>
 <div id="ts-example">
     <br />
-    <button type="button" class="btn btn-primary btn-md" onclick="MyApp.TSButton()">
+    <button type="button" id="theButton" class="btn btn-primary btn-md">
         Click Me
     </button>
 </div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            MyApp.Feature();
+        });
+    </script>
+}

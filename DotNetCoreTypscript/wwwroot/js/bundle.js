@@ -15,21 +15,27 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.greeter = exports.TSButton = void 0;
-var models_1 = require("./models");
 __exportStar(require("./models"), exports);
-var user = new models_1.Student("Sami", "M.", "Jeanny");
-function TSButton() {
-    var name = "Jeanny Sami Updated tf";
-    document.getElementById("ts-example").innerHTML = greeter(user);
-}
-exports.TSButton = TSButton;
+__exportStar(require("./feature"), exports);
+
+},{"./feature":2,"./models":3}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Feature = exports.greeter = void 0;
+var models_1 = require("./models");
 function greeter(person) {
     return "Hello, " + person.fullName;
 }
 exports.greeter = greeter;
+function Feature() {
+    $("#theButton").on('click', function () {
+        var user = new models_1.Student("Sami", "M.", "Jeanny");
+        document.getElementById("ts-example").innerHTML = greeter(user);
+    });
+}
+exports.Feature = Feature;
 
-},{"./models":2}],2:[function(require,module,exports){
+},{"./models":3}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Student = void 0;

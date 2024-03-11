@@ -3,15 +3,17 @@
   "sources": [
     "../../node_modules/browser-pack/_prelude.js",
     "../../Scripts/app.ts",
+    "../../Scripts/feature.ts",
     "../../Scripts/models.ts"
   ],
   "names": [],
-  "mappings": "AAAA;;;;;;;;;;;;;;;;;;ACAC,mCAA2C;AAE5C,2CAAyB;AAEzB,IAAI,IAAI,GAAG,IAAI,gBAAO,CAAC,MAAM,EAAE,IAAI,EAAE,QAAQ,CAAC,CAAC;AAC/C,SAAgB,QAAQ;IACpB,IAAI,IAAI,GAAW,wBAAwB,CAAC;IAC5C,QAAQ,CAAC,cAAc,CAAC,YAAY,CAAC,CAAC,SAAS,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;AACpE,CAAC;AAHD,4BAGC;AAED,SAAgB,OAAO,CAAC,MAAe;IACnC,OAAO,SAAS,GAAG,MAAM,CAAC,QAAQ,CAAC;AACvC,CAAC;AAFD,0BAEC;;;;;;ACZA;IAEG,iBAAmB,SAAiB,EAAS,aAAqB,EAAS,QAAgB;QAAxE,cAAS,GAAT,SAAS,CAAQ;QAAS,kBAAa,GAAb,aAAa,CAAQ;QAAS,aAAQ,GAAR,QAAQ,CAAQ;QACvF,IAAI,CAAC,QAAQ,GAAG,SAAS,GAAG,GAAG,GAAG,aAAa,GAAG,GAAG,GAAG,QAAQ,GAAG,QAAQ,CAAC;IAChF,CAAC;IACL,cAAC;AAAD,CALC,AAKA,IAAA;AALa,0BAAO",
+  "mappings": "AAAA;;;;;;;;;;;;;;;;;ACAC,2CAAyB;AAC1B,4CAA0B;;;;;;ACDzB,mCAAmC;AAGpC,SAAgB,OAAO,CAAC,MAAe;IACnC,OAAO,SAAS,GAAG,MAAM,CAAC,QAAQ,CAAC;AACvC,CAAC;AAFD,0BAEC;AAED,SAAgB,OAAO;IACnB,CAAC,CAAC,YAAY,CAAC,CAAC,EAAE,CAAC,OAAO,EAAE;QACxB,IAAI,IAAI,GAAG,IAAI,gBAAO,CAAC,MAAM,EAAE,IAAI,EAAE,QAAQ,CAAC,CAAC;QAC/C,QAAQ,CAAC,cAAc,CAAC,YAAY,CAAC,CAAC,SAAS,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IACpE,CAAC,CAAC,CAAA;AACN,CAAC;AALD,0BAKC;;;;;;ACZA;IAEG,iBAAmB,SAAiB,EAAS,aAAqB,EAAS,QAAgB;QAAxE,cAAS,GAAT,SAAS,CAAQ;QAAS,kBAAa,GAAb,aAAa,CAAQ;QAAS,aAAQ,GAAR,QAAQ,CAAQ;QACvF,IAAI,CAAC,QAAQ,GAAG,SAAS,GAAG,GAAG,GAAG,aAAa,GAAG,GAAG,GAAG,QAAQ,GAAG,QAAQ,CAAC;IAChF,CAAC;IACL,cAAC;AAAD,CALC,AAKA,IAAA;AALa,0BAAO",
   "file": "generated.js",
   "sourceRoot": "",
   "sourcesContent": [
     "(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=\"function\"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error(\"Cannot find module '\"+i+\"'\");throw a.code=\"MODULE_NOT_FOUND\",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=\"function\"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()",
-    "﻿import { Person, Student } from \"./models\";\r\n\r\nexport * from './models';\r\n\r\nlet user = new Student(\"Sami\", \"M.\", \"Jeanny\");\r\nexport function TSButton() {\r\n    let name: string = \"Jeanny Sami Updated tf\"; \r\n    document.getElementById(\"ts-example\").innerHTML = greeter(user);\r\n}\r\n\r\nexport function greeter(person: Student) { \r\n    return \"Hello, \" + person.fullName;\r\n}",
+    "﻿export * from './models';\r\nexport * from './feature';",
+    "﻿import { Student } from \"./models\";\r\n\r\n\r\nexport function greeter(person: Student) {\r\n    return \"Hello, \" + person.fullName;\r\n}\r\n\r\nexport function Feature() {\r\n    $(\"#theButton\").on('click', function () {\r\n        let user = new Student(\"Sami\", \"M.\", \"Jeanny\");\r\n        document.getElementById(\"ts-example\").innerHTML = greeter(user);\r\n    })\r\n}\r\n",
     "﻿export class Student {\r\n    fullName: string;\r\n    constructor(public firstName: string, public middleInitial: string, public lastName: string) {\r\n        this.fullName = firstName + \" \" + middleInitial + \" \" + lastName + ' modif';\r\n    }\r\n}\r\n\r\nexport interface Person {\r\n    firstName: string;\r\n    lastName: string;\r\n}\r\n"
   ]
 }
