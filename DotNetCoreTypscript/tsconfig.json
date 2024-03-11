@@ -1,0 +1,13 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "module": "CommonJS",
+    "target": "es5",
+    "outDir": "Scripts/out"
+  },
+  "files": ["Scripts/app.ts"]
+}
