@@ -24,7 +24,7 @@
 
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="npx browserify Scripts/out/app.js --standalone MyApp &gt; wwwroot/js/bundle.js" />
+    <Exec Command="npm run build" />
   </Target> 
 
 </Project>

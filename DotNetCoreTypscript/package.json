@@ -3,12 +3,12 @@
   "name": "asp.net",
   "private": true,
   "scripts": {
-    "browserify": "npx browserify Scripts/out/app.js --standalone MyApp > wwwroot/js/bundle.js",
-    "watch": "nodemon --watch Scripts/out/**/* -e js -x npm run browserify"
+    "build": "cd wwwroot\\js && npx browserify ../../Scripts/app.ts -p [ tsify --noImplicitAny ] --standalone MyApp --debug | exorcist bundle.js.map > bundle.js"
   },
   "devDependencies": {
     "@types/jquery": "3.5.1",
     "browserify": "17.0.0",
-    "nodemon": "3.1.0"
+    "exorcist": "2.0.0",
+    "tsify": "5.0.4"
   }
 }

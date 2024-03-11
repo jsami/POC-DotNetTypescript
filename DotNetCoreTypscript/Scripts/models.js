@@ -6,7 +6,7 @@ var Student = /** @class */ (function () {
         this.firstName = firstName;
         this.middleInitial = middleInitial;
         this.lastName = lastName;
-        this.fullName = firstName + " " + middleInitial + " " + lastName;
+        this.fullName = firstName + " " + middleInitial + " " + lastName + ' modif';
     }
     return Student;
 }());

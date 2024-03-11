@@ -20,7 +20,7 @@ var models_1 = require("./models");
 __exportStar(require("./models"), exports);
 var user = new models_1.Student("Sami", "M.", "Jeanny");
 function TSButton() {
-    var name = "Jeanny Sami Updated";
+    var name = "Jeanny Sami Updated tf";
     document.getElementById("ts-example").innerHTML = greeter(user);
 }
 exports.TSButton = TSButton;
@@ -46,3 +46,4 @@ exports.Student = Student;
 
 },{}]},{},[1])(1)
 });
+//# sourceMappingURL=bundle.js.map
