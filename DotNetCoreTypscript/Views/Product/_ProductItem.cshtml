@@ -1,5 +1,7 @@
-﻿<div class="product">
-    <img src="product1.jpg" alt="Product 1">
-    <div class="description">Short description of Product 1</div>
-    <button class="view-details" onclick="openModal('modal1')">View Details</button>
+﻿@model ProductViewModel
+
+<div class="product">
+    <img src="~/img/@Model.ImageFileName" alt="@Model.Name">
+    <div class="description">@Model.ShortDescription</div>
+    <button class="view-details" data-product-id="@Model.Id">View Details</button>
 </div>
