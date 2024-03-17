@@ -34,10 +34,7 @@ export abstract class Component<TModel extends ComponentModel> {
     private DoInit() {
         this.DetachEvents();
         this.ClearValidationCallbacks();
-        this.OnInitStart();
-        this.OnEventsRegistration();
-        this.OnValidationRegistration();
-        this.OnInitFinished();
+        this.OnInit();
     }
 
     /**
@@ -67,23 +64,7 @@ export abstract class Component<TModel extends ComponentModel> {
      * Add here any logics that need to be called at start of initialization.
      * @param _config
      */
-    protected abstract OnInitStart(): void;
-
-    /**
-     * Add here any DOM event listener registration.
-     */
-    protected abstract OnEventsRegistration(): void;
-
-    /**
-     * Add here any validation logic for HTML elements. 
-     * It's the place where we call the Validate() method
-     */
-    protected abstract OnValidationRegistration(): void;
-
-    /**
-     * Add here any logics that need to be called when initialization is finished.
-     */
-    protected abstract OnInitFinished(): void;
+    protected abstract OnInit(): void;
 
 
     /**

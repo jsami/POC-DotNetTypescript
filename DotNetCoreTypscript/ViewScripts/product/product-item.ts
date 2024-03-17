@@ -1,24 +1,26 @@
 import { Component, ComponentModel } from "../abstracts/component";
+import { Product } from "./models/product";
 
 class ProductItemComponent extends Component<ComponentModel> {
-    private ViewDetailsButton = '.view-details';
+    private readonly ViewDetailsButton = '.view-details';
 
-    protected OnInitStart(): void {
-    }
-
-    protected OnEventsRegistration(): void {
+    protected OnInit(): void {
         $(this.ViewDetailsButton).on(this.Event('click'), (event) => {
             openModal();
         });
     }
 
-    protected OnValidationRegistration(): void {
-
+    OnProductConsultation(callback: (product: Product) => void) {
+        $(this.ViewDetailsButton).on(this.Event('click'), (event) => {
+            let productId = $(event.currentTarget).data('product-id');
+            $.get(`/Product/${productId}`)
+                .then((product: Product) => {
+                    callback(product);
+                }).fail(error => {
+                    console.error(error);
+                });
+        });
     }
-
-    protected OnInitFinished(): void {
-    }
-
 }
 
 export const ProductItem = new ProductItemComponent();
