@@ -1,15 +1,17 @@
-﻿export interface ComponentModel { }
+﻿import { Observable, Subscriber, combineLatest, map } from "rxjs";
+
+export interface ComponentModel { }
 
 /**
  * Abstract class representing a Component
  */
 export abstract class Component<TModel extends ComponentModel> {
-    private ValidationCallbacks = new Map<HTMLElement, ((status: boolean, element: HTMLElement) => void)[]>();
+    private ElementsValidation = new Map<HTMLElement, (element: HTMLElement) => boolean>();
     private Children: Component<TModel>[] = [];
-    private Parent: Component<TModel> = null;
+    private Parent: Component<TModel> | null = null;
     private readonly EventNamespace: string;
     protected readonly ValidationEvent = 'input-validation-event';
-    protected Config: TModel;
+    protected Model: TModel;
     
     constructor() {
         this.EventNamespace = this.GenerateEventNameSpace();
@@ -17,13 +19,13 @@ export abstract class Component<TModel extends ComponentModel> {
 
     /**
     * Initialize component states
-    * @param config
+    * @param model
     * @returns
     */
-    Init(config?: TModel) {
-        this.Config = config;
+    Init(model: TModel) {
+        this.Model = model;
         for (const child of this.Children) {
-            child.Init(config);
+            child.Init(model);
         }
         this.DoInit();
     }
@@ -45,7 +47,7 @@ export abstract class Component<TModel extends ComponentModel> {
         if (this.Parent !== null) {
             this.Parent.ReInit();
         } else {
-            this.Init(this.Config);
+            this.Init(this.Model);
         }
     }
 
@@ -61,8 +63,7 @@ export abstract class Component<TModel extends ComponentModel> {
     }
 
     /**
-     * Add here any logics that need to be called at start of initialization.
-     * @param _config
+     * Add here any logics that need to be called on component initialization.
      */
     protected abstract OnInit(): void;
 
@@ -92,59 +93,75 @@ export abstract class Component<TModel extends ComponentModel> {
     protected Validate(elementOrSelector: HTMLElement | string, isValid: (input: HTMLElement) => boolean) {
         const eventListener = (event: JQuery.TriggeredEvent) => {
             let field = $(event.currentTarget);
-            field.parent().removeClass('has-success').removeClass('has-error');
+            field.removeClass('has-success').removeClass('has-error');
             let status = isValid(event.currentTarget);
             if (status) {
-                field.parent().addClass('has-success');
+                field.addClass('has-success');
             } else {
-                field.parent().addClass('has-error');
+                field.addClass('has-error');
             }
 
-            if (this.ValidationCallbacks.has(event.currentTarget)) {
-                for (const callback of this.ValidationCallbacks.get(event.currentTarget)) {
-                    callback(status, event.currentTarget);
-                }
-            }
+            
         };
-
+        
         if (typeof (elementOrSelector) === 'string') {
             $(elementOrSelector).each((_index, element) => {
                 $(element).on(this.ValidationEvent, eventListener);
+                this.ElementsValidation.set(element, isValid)
             })
         }
         else {
             $(elementOrSelector).on(this.ValidationEvent, eventListener);
+            this.ElementsValidation.set(elementOrSelector, isValid)
         }
     }
 
     /**
-     * Attach a callback to an element validation event
+     * Get an observable that produce validation status for an element
      * @param element
-     * @param callback
+     * @returns 
      */
-    protected AddValidationCallback(
-        elementOrSelector: HTMLElement | string, callback: (status: boolean, element: HTMLElement) => void) {
-        const addCallback = (element: HTMLElement) => {
-            if (!this.ValidationCallbacks.has(element)) {
-                this.ValidationCallbacks.set(element, []);
-            }
-            this.ValidationCallbacks.get(element).push(callback);
-        }
+    protected  ValidationObservableOf(element: HTMLElement) : Observable<boolean> {
+        return this.FromValidationEvent(element).pipe(
+            map(ev => {
+                let isValid = this.ElementsValidation.get(ev.currentTarget);
+                if (isValid) {
+                    return isValid(element);
+                }
+                return true;
+            })
+        )
+    }
 
-        if (typeof (elementOrSelector) === 'string') {
-            $(elementOrSelector).each((_index, element) => {
-                addCallback(element);
-            });
-        } else {
-            addCallback(elementOrSelector);
-        }
+    /**
+     * Create an observable from element validation event
+     * @param element 
+     * @returns 
+     */
+    private FromValidationEvent(element: HTMLElement) {
+        return new Observable((subscriber: Subscriber<JQuery.TriggeredEvent>) => {
+            const handler = (event: JQuery.TriggeredEvent) => subscriber.next(event);
+            $(element).on(this.ValidationEvent, handler);
+            return () => {
+                $(element).off(this.ValidationEvent, handler);
+            }
+        });
+    }
+
+    protected AllValid(...validations: Observable<boolean>[]) : Observable<boolean> {
+        return combineLatest(validations).pipe(
+            map(validationResults => {
+                let result = validationResults.reduce((acc, curVal) => acc = acc && curVal, true);
+                return result;
+            })
+        )
     }
 
     /**
       * Remove all registered validation callbacks
       */
     private ClearValidationCallbacks() {
-        this.ValidationCallbacks.clear();
+        this.ElementsValidation.clear();
     }
 
     /**

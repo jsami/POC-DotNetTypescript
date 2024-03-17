@@ -78,3 +78,62 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+.order-form {
+    max-width: 800px; /* Align with the product listing width */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+    .order-form h2 {
+        text-align: center;
+    }
+
+    .order-form form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .order-form input[type="text"],
+    .order-form input[type="email"],
+    .order-form select {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 2px solid #ddd;
+    }
+
+    .order-form input[type="button"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+        .order-form input[type="button"]:disabled {
+            background-color: darkgray;
+            cursor: not-allowed;
+        }
+
+        .order-form input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+            .order-form input[type="button"]:hover:disabled {
+                background-color: darkgray;
+            }
+        
+
+    .order-form input.has-success,
+    .order-form select.has-success {
+        border-color: green;
+    }
+
+    .order-form input.has-error,
+    .order-form select.has-error {
+        border-color: red;
+    }

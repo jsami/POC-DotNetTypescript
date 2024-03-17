@@ -12,6 +12,27 @@
 
 <p id="product-consultation"></p>
 
+<!-- Order Form -->
+<div class="order-form">
+    <h2>Order Form</h2>
+    <form action="/submit-order" method="post">
+        <label for="customerName">Name*:</label>
+        <input type="text" id="customerName"  name="customerName"><br><br>
+        <label for="customerEmail">Email*:</label>
+        <input type="email" id="customerEmail" name="customerEmail"><br><br>
+        <label for="productSelection">Select Product*:</label>
+        <select id="productSelection" name="productSelection">
+            <option>Select your product</option>
+            <option value="1">Product 1</option>
+            <option value="2">Product 2</option>
+            <option value="3">Product 3</option>
+            <option value="4">Product 4</option>
+            <option value="5">Product 5</option>
+        </select><br><br>
+        <input id="submitOrder" type="button" value="Submit Order" disabled>
+    </form>
+</div>
+
 @section Scripts {
     <script>
         $(function () {
