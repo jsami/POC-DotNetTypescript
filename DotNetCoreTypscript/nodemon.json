@@ -1,0 +1,5 @@
+{
+  "watch": [ "Scripts/" ],
+  "ext": "ts",
+  "exec": "npm run build"
+}

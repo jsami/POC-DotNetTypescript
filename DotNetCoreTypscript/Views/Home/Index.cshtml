@@ -7,16 +7,9 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 <div id="ts-example">
-    <br />
-    <button type="button" id="theButton" class="btn btn-primary btn-md">
-        Click Me
-    </button>
+    <a asp-controller="Product" asp-action="Index">Products</a>
 </div>
 
 @section Scripts {
-    <script>
-        $(function () {
-            MyApp.Feature();
-        });
-    </script>
+
 }

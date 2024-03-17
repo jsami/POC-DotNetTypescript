@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /DotNetCoreTypscript/wwwroot/js/bundle.js
 /DotNetCoreTypscript/wwwroot/js/bundle.js.map
+/DotNetCoreTypscript/bundle.js

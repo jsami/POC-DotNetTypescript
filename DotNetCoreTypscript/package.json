@@ -1,15 +1,19 @@
 {
   "version": "1.0.0",
-  "name": "asp.net",
+  "name": "poc",
   "private": true,
   "scripts": {
-    "build": "cd wwwroot\\js && npx browserify ../../Scripts/app.ts -p [ tsify ] --standalone MyApp --debug | exorcist bundle.js.map > bundle.js",
-    "build-release": "cd wwwroot\\js && npx browserify ../../Scripts/app.ts -p [ tsify ] --standalone MyApp > bundle.js"
+    "build": "cd wwwroot\\js && npx browserify ../../ViewScripts/app.ts -p [ tsify ] --standalone MyApp --debug | exorcist bundle.js.map > bundle.js",
+    "build-release": "cd wwwroot\\js && npx browserify ../../ViewScripts/app.ts -p [ tsify ] --standalone MyApp > o.js && terser o.js -o bundle.js --compress --mangle && del o.js",
+    "watch": "nodemon"
   },
   "devDependencies": {
+    "@types/bootstrap": "5.1.0",
     "@types/jquery": "3.5.1",
     "browserify": "17.0.0",
     "exorcist": "2.0.0",
-    "tsify": "5.0.4"
+    "terser": "5.29.1",
+    "tsify": "5.0.4",
+    "nodemon": "3.1.0"
   }
 }

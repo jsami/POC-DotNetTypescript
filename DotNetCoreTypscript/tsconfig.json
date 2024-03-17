@@ -5,7 +5,11 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "module": "CommonJS",
-    "target": "es5"
+    "forceConsistentCasingInFileNames": false,
+    "target": "es6",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "lib": [ "es2015", "DOM" ],
+    "outDir": "obj/_scripts"
   }
 }
