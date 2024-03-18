@@ -1,13 +1,12 @@
 ﻿import { Observable, Subscriber, combineLatest, map } from "rxjs";
 import { ComponentModel } from "./component-model";
+import { ComponentEvents } from "../events/component-events";
 
 /**
  * Abstract class representing a Component
  */
 export abstract class Component<TModel extends ComponentModel> {
     private ElementsValidators = new Map<HTMLElement, (element: HTMLElement) => boolean>();
-    private Children: Component<TModel>[] = [];
-    private Parent: Component<TModel> | null = null;
     private readonly EventNamespace: string;
     protected readonly ValidationEvent = 'input-validation-event';
     protected Model: TModel;
@@ -23,9 +22,9 @@ export abstract class Component<TModel extends ComponentModel> {
     */
     Init(model: TModel) {
         this.Model = model;
-        for (const child of this.Children) {
-            child.Init(model);
-        }
+        ComponentEvents.ReinitRequested.Subscribe(_ => {
+            this.DoInit();
+        });
         this.DoInit();
     }
 
@@ -43,22 +42,7 @@ export abstract class Component<TModel extends ComponentModel> {
      * Useful if the DOM with which the component was built has been mutated / reloaded
      */
     protected ReInit() {
-        if (this.Parent !== null) {
-            this.Parent.ReInit();
-        } else {
-            this.Init(this.Model);
-        }
-    }
-
-    /**
-     * Add child components
-     * @param children
-     */
-    protected AddChildren(...children: Component<TModel>[]) {
-        for (const child of children) {
-            this.Children.push(child);
-            child.Parent = this;
-        }
+        ComponentEvents.ReinitRequested.Publish(1);
     }
 
     /**

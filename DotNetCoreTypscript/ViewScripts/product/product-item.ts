@@ -16,7 +16,7 @@ class ProductItemComponent extends Component<ProductComponentModel> {
                     ProductEvents.DetailsRetrieved.Publish(product);
                 }).fail(error => {
                     console.error(error);
-                });
+                }); 
         });
 
         $(this.AddToCartButton).on(this.Event('click'), (event) => {

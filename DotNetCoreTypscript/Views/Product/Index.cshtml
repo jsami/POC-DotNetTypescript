@@ -36,15 +36,8 @@
 
 @section Scripts {
     <script>
-        $(function () {
+        document.addEventListener('DOMContentLoaded', function () {
             MyApp.ProductListing.Init();
         });
-        function openModal() {
-            document.getElementById('modal1').style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('modal1').style.display = "none";
-        }
     </script>
 }
