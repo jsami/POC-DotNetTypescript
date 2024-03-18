@@ -1,6 +1,5 @@
 ﻿import { Observable, Subscriber, combineLatest, map } from "rxjs";
-
-export interface ComponentModel { }
+import { ComponentModel } from "./component-model";
 
 /**
  * Abstract class representing a Component
@@ -156,14 +155,14 @@ export abstract class Component<TModel extends ComponentModel> {
     }
 
     /**
-      * Remove all registered validation callbacks
+      * Remove all registered element validators
       */
     private ClearValidationCallbacks() {
         this.ElementsValidators.clear();
     }
 
     /**
-     * Generate a random string to insure namespace unicity
+     * Generate a random string to insure event namespace unicity
      * @returns
      */
     private GenerateEventNameSpace() : string {

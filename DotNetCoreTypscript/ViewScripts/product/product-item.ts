@@ -1,8 +1,10 @@
-import { Component, ComponentModel } from "../abstracts/component";
+import { Component } from "../abstracts/component";
 import { ProductEvents } from "../events/product-events";
+import { ProductComponentModel } from "../models/component-models/product-component-model";
 import { Product } from "../models/product";
 
-class ProductItemComponent extends Component<ComponentModel> {
+
+class ProductItemComponent extends Component<ProductComponentModel> {
     private readonly ViewDetailsButton = '.view-details';
     private readonly AddToCartButton = '.add-to-cart';
 
@@ -11,7 +13,7 @@ class ProductItemComponent extends Component<ComponentModel> {
             let productId = $(event.currentTarget).data('product-id');
             $.get(`/Product/${productId}`)
                 .then((product: Product) => {
-                    ProductEvents.ConsultProduct.Publish(product);
+                    ProductEvents.DetailsRetrieved.Publish(product);
                 }).fail(error => {
                     console.error(error);
                 });
@@ -28,7 +30,7 @@ class ProductItemComponent extends Component<ComponentModel> {
                 data: json,
                 contentType: 'application/json'
             }).then((count: number) => {
-                ProductEvents.AddToCart.Publish(count);
+                ProductEvents.AddedToCart.Publish(count);
             }).fail(error => {
                 console.error(error);
             });

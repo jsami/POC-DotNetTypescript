@@ -8,11 +8,16 @@
 
   <ItemGroup>
     <Compile Remove="built\**" />
+    <Compile Remove="ViewScripts\product\models\**" />
     <Content Remove="built\**" />
+    <Content Remove="ViewScripts\product\models\**" />
     <EmbeddedResource Remove="built\**" />
+    <EmbeddedResource Remove="ViewScripts\product\models\**" />
     <None Remove="built\**" />
+    <None Remove="ViewScripts\product\models\**" />
     <TypeScriptCompile Remove="built\**" />
     <TypeScriptCompile Remove="node_modules\**" />
+    <TypeScriptCompile Remove="ViewScripts\product\models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,10 +25,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewScripts\product\models\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

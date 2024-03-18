@@ -1,8 +1,8 @@
-import { DomainEvent } from "../common/events/domain-event";
+import { DomainEvent } from "./domain-event";
 import { Product } from "../models/product";
 
 
 export const ProductEvents = {
-    ConsultProduct: new DomainEvent<Product>(),
-    AddToCart: new DomainEvent<number>()
+    DetailsRetrieved: new DomainEvent<Product>(),
+    AddedToCart: new DomainEvent<number>()
 };

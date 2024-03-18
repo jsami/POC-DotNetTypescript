@@ -1,9 +1,10 @@
-import { Component, ComponentModel } from '../abstracts/component';
+import { Component } from '../abstracts/component';
 import { ProductEvents } from '../events/product-events';
+import { ProductComponentModel } from '../models/component-models/product-component-model';
 import { ProductItem } from './product-item';
 
 
-class ProductListingComponent extends Component<ComponentModel> {
+class ProductListingComponent extends Component<ProductComponentModel> {
     private readonly CustomerName = '#customerName';
     private readonly CustomerEmail = '#customerEmail';
     private readonly ProductSelection = '#productSelection';
@@ -15,12 +16,12 @@ class ProductListingComponent extends Component<ComponentModel> {
 
     protected OnInit(): void {
 
-        ProductEvents.ConsultProduct.Subscribe(product => {
+        ProductEvents.DetailsRetrieved.Subscribe(product => {
             $('#product-consultation').text(`Consulting: ${product.longDescription}`);
         });
 
-        ProductEvents.AddToCart.Subscribe(count => {
-            $('#product-consultation').text(`${count} products added to cart.`);
+        ProductEvents.AddedToCart.Subscribe(totalCount => {
+            $('#product-consultation').text(`${totalCount} products added to cart.`);
         });
 
         const customerName = $(this.CustomerName)[0];
