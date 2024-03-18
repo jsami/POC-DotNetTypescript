@@ -1,1 +1,2 @@
-﻿export * from './product'
+﻿export { Header } from './shared/header'
+export * from './product'
