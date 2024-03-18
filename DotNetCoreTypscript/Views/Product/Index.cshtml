@@ -3,6 +3,17 @@
     ViewData["Title"] = "Product Listing";
 }
 
+<!-- Order Form -->
+<header>
+    <div class="header-content">
+        <h1>Cool Store</h1>
+        <div class="cart-icon">
+            🛒 <span class="cart-counter">0</span>
+        </div>
+    </div>
+</header>
+
+
 <div id="products">
     @foreach (var product in Model)
     {
@@ -12,7 +23,6 @@
 
 <p id="product-consultation"></p>
 
-<!-- Order Form -->
 <div class="order-form">
     <h2>Order Form</h2>
     <form action="/submit-order" method="post">

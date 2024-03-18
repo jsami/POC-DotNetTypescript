@@ -1,4 +1,5 @@
 import { Component, ComponentModel } from '../abstracts/component';
+import { ProductEvents } from '../events/product-events';
 import { ProductItem } from './product-item';
 
 
@@ -13,8 +14,13 @@ class ProductListingComponent extends Component<ComponentModel> {
     }
 
     protected OnInit(): void {
-        ProductItem.OnProductConsultation(product => {
+
+        ProductEvents.ConsultProduct.Subscribe(product => {
             $('#product-consultation').text(`Consulting: ${product.longDescription}`);
+        });
+
+        ProductEvents.AddToCart.Subscribe(count => {
+            $('#product-consultation').text(`${count} products added to cart.`);
         });
 
         const customerName = $(this.CustomerName)[0];
@@ -38,15 +44,15 @@ class ProductListingComponent extends Component<ComponentModel> {
             let currentValue = $(element).val();
             let isValid = typeof(currentValue) === 'string' && parseInt(currentValue) > 0;
             return isValid;
-        })
-
-        const submitOrderBtn = $('#submitOrder');
-        const customerNameValid$ = this.ValidationObservableOf(customerName);
-        const customerEmailValid$ = this.ValidationObservableOf(customerEmail);
-        const selectedProductValid$ = this.ValidationObservableOf(selectedProduct);
+        });
+        
+        const customerNameValid$ = this.ObservableValidationOf(customerName);
+        const customerEmailValid$ = this.ObservableValidationOf(customerEmail);
+        const selectedProductValid$ = this.ObservableValidationOf(selectedProduct);
 
         this.AllValid(customerNameValid$, customerEmailValid$, selectedProductValid$)
             .subscribe(isValid => {
+                const submitOrderBtn = $('#submitOrder');
                 if (isValid) {
                     submitOrderBtn.removeAttr('disabled');
                 } else {

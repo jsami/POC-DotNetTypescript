@@ -6,7 +6,7 @@ export interface ComponentModel { }
  * Abstract class representing a Component
  */
 export abstract class Component<TModel extends ComponentModel> {
-    private ElementsValidation = new Map<HTMLElement, (element: HTMLElement) => boolean>();
+    private ElementsValidators = new Map<HTMLElement, (element: HTMLElement) => boolean>();
     private Children: Component<TModel>[] = [];
     private Parent: Component<TModel> | null = null;
     private readonly EventNamespace: string;
@@ -100,19 +100,17 @@ export abstract class Component<TModel extends ComponentModel> {
             } else {
                 field.addClass('has-error');
             }
-
-            
         };
         
         if (typeof (elementOrSelector) === 'string') {
             $(elementOrSelector).each((_index, element) => {
                 $(element).on(this.ValidationEvent, eventListener);
-                this.ElementsValidation.set(element, isValid)
+                this.ElementsValidators.set(element, isValid)
             })
         }
         else {
             $(elementOrSelector).on(this.ValidationEvent, eventListener);
-            this.ElementsValidation.set(elementOrSelector, isValid)
+            this.ElementsValidators.set(elementOrSelector, isValid)
         }
     }
 
@@ -121,10 +119,10 @@ export abstract class Component<TModel extends ComponentModel> {
      * @param element
      * @returns 
      */
-    protected  ValidationObservableOf(element: HTMLElement) : Observable<boolean> {
-        return this.FromValidationEvent(element).pipe(
+    protected  ObservableValidationOf(element: HTMLElement) : Observable<boolean> {
+        return this.ObservableFromValidationEvent(element).pipe(
             map(ev => {
-                let isValid = this.ElementsValidation.get(ev.currentTarget);
+                let isValid = this.ElementsValidators.get(ev.currentTarget);
                 if (isValid) {
                     return isValid(element);
                 }
@@ -138,7 +136,7 @@ export abstract class Component<TModel extends ComponentModel> {
      * @param element 
      * @returns 
      */
-    private FromValidationEvent(element: HTMLElement) {
+    private ObservableFromValidationEvent(element: HTMLElement) {
         return new Observable((subscriber: Subscriber<JQuery.TriggeredEvent>) => {
             const handler = (event: JQuery.TriggeredEvent) => subscriber.next(event);
             $(element).on(this.ValidationEvent, handler);
@@ -154,14 +152,14 @@ export abstract class Component<TModel extends ComponentModel> {
                 let result = validationResults.reduce((acc, curVal) => acc = acc && curVal, true);
                 return result;
             })
-        )
+        );
     }
 
     /**
       * Remove all registered validation callbacks
       */
     private ClearValidationCallbacks() {
-        this.ElementsValidation.clear();
+        this.ElementsValidators.clear();
     }
 
     /**

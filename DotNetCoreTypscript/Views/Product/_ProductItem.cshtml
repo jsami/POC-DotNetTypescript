@@ -3,5 +3,8 @@
 <div class="product">
     <img src="~/img/@Model.ImageFileName" alt="@Model.Name">
     <div class="description">@Model.ShortDescription</div>
-    <button class="view-details" data-product-id="@Model.Id">View Details</button>
+    <div class="product-actions">
+        <button class="view-details" data-product-id="@Model.Id">View Details</button>
+        <button class="add-to-cart" data-product-id="@Model.Id">Add to Cart</button>
+    </div>
 </div>

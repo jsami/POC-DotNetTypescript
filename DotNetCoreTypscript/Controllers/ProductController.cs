@@ -65,5 +65,19 @@ namespace DotNetCoreTypscript.Controllers
             }
             return NotFound();
         }
+
+        [HttpPost]
+        [Route("[controller]/add-to-cart")]
+        public IActionResult AddToCart([FromBody]AddToCartRequest request)
+        {
+            const string productsInCart = "products-in-cart";
+            if (HttpContext.Session.GetInt32(productsInCart) is int count)
+                count++;
+            else
+                count = 1;
+            HttpContext.Session.SetInt32(productsInCart, count);
+
+            return Ok(count);
+        } 
     }
 }
